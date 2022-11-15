@@ -1,36 +1,34 @@
-const { Schema, model } = require('mongoose');
+const {
+    Schema,
+    model,
+    Types
+} = require('mongoose');
 // const { ObjectId } = require('mongodb');
 
 //schema to create Thought model with references
-const reactionSchema = new Schema(
-    {
-        reactionId: {
-            type: Schema.Types.ObjectId,
-            default: () => new Types.ObjectId(),
-        },
-
-        responseBody: {
-            type: String,
-            required: true,
-            maxlength: 280,
-          },
-
-        //next two properties are references
-        username:
-            [{
-                type: Schema.Types.ObjectId,
-                ref: 'user',
-            }],
-
-        createdAt: {
-            type: Date,
-            default: Date.now,
-            //aggregate to format date
-        },
-
+const reactionSchema = new Schema({
+    reactionId: {
+        type: Schema.Types.ObjectId,
+        default: () => new Types.ObjectId(),
     },
-);
 
-const Reaction = model('reaction', reactionSchema);
+    responseBody: {
+        type: String,
+        required: true,
+        maxlength: 280,
+    },
 
-module.exports = Reaction;
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        //aggregate to format date
+    },
+
+    //next two properties are references
+    username: {
+        type: Schema.Types.ObjectId,
+        ref: 'user',
+    },
+}, );
+
+module.exports = reactionSchema;

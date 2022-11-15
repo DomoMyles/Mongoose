@@ -1,8 +1,11 @@
-const { Schema, model } = require('mongoose');
+const {
+    Schema,
+    model
+} = require('mongoose');
 
+const thoughtSchema = require("./Thought_copy")
 //schema to create User model with references
-const userSchema = new Schema(
-    {
+const userSchema = new Schema({
         username: {
             type: String,
             required: true,
@@ -13,21 +16,19 @@ const userSchema = new Schema(
             type: String,
             required: true,
             unique: true,
-            email: { $regex: /@mongodb\.com$/ }
+            email: {
+                $regex: /@mongodb\.com$/
+            }
         },
 
-        //next two properties are references
+        friends: [{
+            type: Schema.Types.ObjectId,
+            ref: 'user',
+        }],
         thoughts:
-            [{
-                type: Schema.Types.ObjectId,
-                ref: 'thought',
-            }],
-
-        friends:
-            [{
-                type: Schema.Types.ObjectId,
-                ref: 'user',
-            }],
+        [
+            thoughtSchema
+        ],
 
     },
 
